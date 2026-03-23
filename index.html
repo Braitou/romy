@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pour toi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html {
+  overflow-x: hidden;
+  background: #efece7;
+}
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: #efece7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Scroll spacer */
+#scroll-spacer {
+  height: 500vh;
+  position: relative;
+}
+.scroll-hint {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c0bbb4;
+  opacity: 0.4;
+  z-index: 11;
+  pointer-events: none;
+  animation: fadeHint 3s ease-in-out infinite;
+}
+@keyframes fadeHint {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
+
+/* Letter — fixed during animation, then in normal flow */
+#letter-section {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #efece7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  z-index: 5;
+}
+.letter-container {
+  max-width: 320px;
+  width: 100%;
+  padding: 40px 24px;
+}
+.letter-date {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #aaaaaa;
+  margin-bottom: 24px;
+}
+.letter-salutation {
+  font-size: 11px;
+  font-style: italic;
+  color: #222;
+  margin-bottom: 20px;
+}
+.letter-body {
+  font-size: 10px;
+  line-height: 2;
+  font-weight: 300;
+  color: #2a2a2a;
+}
+.letter-body p {
+  margin-bottom: 16px;
+}
+.letter-body .word {
+  display: inline-block;
+  will-change: transform;
+}
+.letter-signature {
+  font-size: 9px;
+  font-style: italic;
+  color: #aaaaaa;
+  text-align: right;
+  margin-top: 32px;
+}
+.letter-separator {
+  border: none;
+  border-top: 0.5px solid #dddad5;
+  margin: 40px 0;
+}
+
+/* SECTION 4 — Photo Collage */
+#collage-section {
+  background: #efece7;
+  padding: 0 0 120px;
+}
+.collage-intro {
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #b0aa9f;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Cormorant Garamond', serif;
+}
+.collage-photo img {
+  width: 100%;
+  display: block;
+}
+.text-slot p {
+  font-size: 9px;
+  line-height: 1.9;
+  color: #9a9590;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Lightbox */
+#lightbox {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #efece7;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  cursor: pointer;
+}
+#lightbox.active {
+  opacity: 1;
+  pointer-events: all;
+}
+#lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll spacer drives the animation -->
+<div id="scroll-spacer"></div>
+<div class="scroll-hint">scroll</div>
+
+<!-- Letter — fixed during animation, then in normal flow -->
+<div id="letter-section">
+  <div class="letter-container">
+    <p class="letter-date">23 mars 2026</p>
+    <p class="letter-salutation">Mon amour,</p>
+    <hr class="letter-separator">
+    <div class="letter-body" id="letter-body">
+      <p>Cette année comme beaucoup d'autres, je n'ai pas les moyens de t'acheter les cadeaux que tu mériterais d'avoir. C'est en partie parce que je ne gagne pas assez ma vie, mais c'est surtout parce qu'aucun cadeau au monde n'arriverait au quart de ta valeur et qu'aucune somme n'est suffisante pour t'offrir ce que tu mérites.</p>
+      <p>(Mais c'est également car je ne gagne pas assez ma vie).</p>
+      <p>Alors cette année, en attendant que tu rentres, j'ai décidé de sortir du placard la seule chose dans laquelle je suis un peu meilleur que la moyenne, et de t'écrire.</p>
+      <p>Comme cela fait longtemps que je ne me suis pas prêté à l'exercice, j'irai droit au but : tu es la plus belle chose qui me soit arrivée dans ma vie. Je ne sais pas quel ange dans le ciel m'a pris en pitié et a décidé de te mettre sur ma route, mais je le remercierai aussitôt que je le croiserai.</p>
+      <p>Je ne saurais pas le huitième de l'homme que je suis si tu n'étais pas dans ma vie depuis tout ce temps. Je n'aurais aucun courage, aucune détermination, aucune envie si tu n'étais pas là.</p>
+      <p>Je te remercie de me supporter, de m'aimer et de rester forte malgré toutes les routes cabossées par lesquelles je te fais passer. Je te remercie d'être l'incarnation de l'amour, d'être patiente et compréhensive. Je te remercie d'être belle et drôle. Je te remercie d'être intelligente et sportive.</p>
+      <p>Depuis qu'on se connaît, tu sais que je suis un rêveur : j'ai toujours rêvé d'être libre, de faire du cinéma, d'être mon propre patron, d'être riche et bien d'autres choses encore. Si on me proposait de t'échanger contre la réalisation de tous mes rêves les plus fous et d'en profiter pendant 1000 ans, je refuserais sans y accorder une seule seconde de réflexion. Car mon seul vrai rêve au fond, c'est toi. Être avec toi, vivre avec toi, grandir avec toi, rire avec toi, lire avec toi, pleurer avec toi, être pauvre avec toi, être malade avec toi : tout faire, tant que je suis avec toi.</p>
+      <p>En attendant de te revoir et d'avoir un vrai cadeau à te donner, ou simplement de t'offrir une plus belle vie, j'espère que ces mots auront réussi à exprimer combien je t'aime.</p>
+    </div>
+    <hr class="letter-separator">
+    <p class="letter-signature">T'es ma ptite vie, et j'espère toujours être a toi,<br><br>Simon</p>
+  </div>
+</div>
+
+<!-- SECTION 4 — Photo Collage -->
+<div id="collage-section">
+  <p class="collage-intro">toi + moi</p>
+
+  <div class="collage-photo" style="width:50vw;margin-left:-12px;margin-top:0;"><img src="photos/photo1.jpg" alt=""></div>
+  <div class="collage-photo" style="width:62vw;margin-left:auto;margin-right:0;margin-top:140px;"><img src="photos/photo2.jpg" alt=""></div>
+  <div class="collage-photo" style="width:44vw;margin:80px auto 0;"><img src="photos/photo3.jpg" alt=""></div>
+  <div class="collage-photo" style="width:78vw;margin-left:-16px;margin-top:200px;"><img src="photos/photo4.jpg" alt=""></div>
+  <div class="collage-photo" style="width:38vw;margin-left:auto;margin-right:20px;margin-top:120px;"><img src="photos/photo5.jpg" alt=""></div>
+  <div class="collage-photo" style="width:55vw;margin-left:16px;margin-top:260px;"><img src="photos/photo6.jpg" alt=""></div>
+  <div class="collage-photo" style="width:85vw;margin:90px auto 0;"><img src="photos/photo7.jpg" alt=""></div>
+  <div class="collage-photo" style="width:42vw;margin-left:-10px;margin-top:180px;"><img src="photos/photo8.jpg" alt=""></div>
+  <div class="collage-photo" style="width:48vw;margin-left:auto;margin-right:-12px;margin-top:100px;"><img src="photos/photo9.jpg" alt=""></div>
+  <div class="collage-photo" style="width:58vw;margin:240px auto 0;"><img src="photos/photo10.jpg" alt=""></div>
+  <div class="collage-photo" style="width:70vw;margin-left:auto;margin-right:-14px;margin-top:80px;"><img src="photos/photo11.jpg" alt=""></div>
+  <div class="collage-photo" style="width:40vw;margin-left:24px;margin-top:160px;"><img src="photos/photo12.jpg" alt=""></div>
+  <div class="collage-photo" style="width:88vw;margin-left:-16px;margin-top:110px;"><img src="photos/photo13.jpg" alt=""></div>
+  <div class="collage-photo" style="width:35vw;margin-left:auto;margin-right:30px;margin-top:280px;"><img src="photos/photo14.jpg" alt=""></div>
+  <div class="collage-photo" style="width:52vw;margin-left:10px;margin-top:90px;"><img src="photos/photo15.jpg" alt=""></div>
+  <div class="collage-photo" style="width:65vw;margin-left:auto;margin-right:0;margin-top:200px;"><img src="photos/photo16.jpg" alt=""></div>
+  <div class="collage-photo" style="width:46vw;margin-left:-8px;margin-top:70px;"><img src="photos/photo17.jpg" alt=""></div>
+  <div class="collage-photo" style="width:50vw;margin-left:auto;margin-right:10px;margin-top:240px;"><img src="photos/photo18.jpg" alt=""></div>
+  <div class="collage-photo" style="width:72vw;margin:130px auto 0;"><img src="photos/photo19.jpg" alt=""></div>
+  <div class="collage-photo" style="width:38vw;margin-left:20px;margin-top:180px;"><img src="photos/photo20.jpg" alt=""></div>
+  <div class="collage-photo" style="width:82vw;margin-left:auto;margin-right:-10px;margin-top:100px;"><img src="photos/photo21.jpg" alt=""></div>
+  <div class="collage-photo" style="width:55vw;margin:260px auto 0;"><img src="photos/photo22.jpg" alt=""></div>
+  <div class="collage-photo" style="width:44vw;margin-left:-12px;margin-top:80px;"><img src="photos/photo23.jpg" alt=""></div>
+  <div class="collage-photo" style="width:60vw;margin-left:auto;margin-right:16px;margin-top:150px;"><img src="photos/photo24.jpg" alt=""></div>
+  <div class="collage-photo" style="width:90vw;margin-left:-16px;margin-top:220px;"><img src="photos/photo25.jpg" alt=""></div>
+  <div class="collage-photo" style="width:42vw;margin-left:auto;margin-right:-8px;margin-top:110px;"><img src="photos/photo26.jpg" alt=""></div>
+  <div class="collage-photo" style="width:68vw;margin-left:8px;margin-top:190px;"><img src="photos/photo27.jpg" alt=""></div>
+  <div class="collage-photo" style="width:48vw;margin:70px auto 0;"><img src="photos/photo28.jpg" alt=""></div>
+  <div class="collage-photo" style="width:75vw;margin-left:-14px;margin-top:250px;"><img src="photos/photo29.jpg" alt=""></div>
+  <div class="collage-photo" style="width:36vw;margin-left:auto;margin-right:24px;margin-top:120px;"><img src="photos/photo30.jpg" alt=""></div>
+  <div class="collage-photo" style="width:58vw;margin-left:12px;margin-top:200px;"><img src="photos/photo31.jpg" alt=""></div>
+  <div class="collage-photo" style="width:52vw;margin-left:auto;margin-right:0;margin-top:90px;"><img src="photos/photo32.jpg" alt=""></div>
+  <div class="collage-photo" style="width:80vw;margin:160px auto 0;"><img src="photos/photo33.jpg" alt=""></div>
+  <div class="collage-photo" style="width:65vw;margin-left:-10px;margin-top:270px;"><img src="photos/photo34.jpg" alt=""></div>
+  <div class="collage-photo" style="width:40vw;margin-left:auto;margin-right:20px;margin-top:80px;"><img src="photos/photo35.jpg" alt=""></div>
+  <div class="collage-photo" style="width:72vw;margin:140px auto 0;"><img src="photos/photo36.jpg" alt=""></div>
+  <div class="collage-photo" style="width:88vw;margin-left:auto;margin-right:-16px;margin-top:100px;"><img src="photos/photo37.jpg" alt=""></div>
+  <div class="collage-photo" style="width:45vw;margin-left:16px;margin-top:230px;"><img src="photos/photo38.jpg" alt=""></div>
+  <div class="collage-photo" style="width:54vw;margin-left:auto;margin-right:8px;margin-top:70px;"><img src="photos/photo39.jpg" alt=""></div>
+  <div class="collage-photo" style="width:78vw;margin-left:-12px;margin-top:190px;"><img src="photos/photo40.jpg" alt=""></div>
+  <div class="collage-photo" style="width:42vw;margin:280px auto 0;"><img src="photos/photo41.jpg" alt=""></div>
+  <div class="collage-photo" style="width:60vw;margin-left:auto;margin-right:-10px;margin-top:110px;"><img src="photos/photo42.jpg" alt=""></div>
+  <div class="collage-photo" style="width:50vw;margin-left:-8px;margin-top:160px;"><img src="photos/photo43.jpg" alt=""></div>
+  <div class="collage-photo" style="width:85vw;margin:90px auto 0;"><img src="photos/photo44.jpg" alt=""></div>
+  <div class="collage-photo" style="width:38vw;margin-left:20px;margin-top:250px;"><img src="photos/photo45.jpg" alt=""></div>
+  <div class="collage-photo" style="width:55vw;margin-left:auto;margin-right:0;margin-top:80px;"><img src="photos/photo46.jpg" alt=""></div>
+  <div class="collage-photo" style="width:48vw;margin-left:-14px;margin-top:200px;"><img src="photos/photo47.jpg" alt=""></div>
+  <div class="collage-photo" style="width:64vw;margin-left:auto;margin-right:12px;margin-top:120px;"><img src="photos/photo48.jpg" alt=""></div>
+  <div class="collage-photo" style="width:70vw;margin:170px auto 0;"><img src="photos/photo49.jpg" alt=""></div>
+  <div class="collage-photo" style="width:44vw;margin-left:-10px;margin-top:260px;"><img src="photos/photo50.jpg" alt=""></div>
+  <div class="collage-photo" style="width:56vw;margin-left:auto;margin-right:-12px;margin-top:100px;"><img src="photos/photo51.jpg" alt=""></div>
+  <div class="collage-photo" style="width:82vw;margin-left:-16px;margin-top:150px;"><img src="photos/photo52.jpg" alt=""></div>
+  <div class="collage-photo" style="width:40vw;margin-left:auto;margin-right:24px;margin-top:220px;"><img src="photos/photo53.jpg" alt=""></div>
+  <div class="collage-photo" style="width:62vw;margin-left:10px;margin-top:80px;"><img src="photos/photo54.jpg" alt=""></div>
+  <div class="collage-photo" style="width:50vw;margin-left:auto;margin-right:0;margin-top:190px;"><img src="photos/photo55.jpg" alt=""></div>
+  <div class="collage-photo" style="width:75vw;margin:110px auto 0;"><img src="photos/photo56.jpg" alt=""></div>
+  <div class="collage-photo" style="width:46vw;margin-left:-8px;margin-top:270px;"><img src="photos/photo57.jpg" alt=""></div>
+  <div class="collage-photo" style="width:58vw;margin-left:auto;margin-right:16px;margin-top:90px;"><img src="photos/photo58.jpg" alt=""></div>
+  <div class="collage-photo" style="width:68vw;margin-left:8px;margin-top:160px;"><img src="photos/photo59.jpg" alt=""></div>
+  <div class="collage-photo" style="width:88vw;margin-left:auto;margin-right:-16px;margin-top:240px;"><img src="photos/photo60.jpg" alt=""></div>
+  <div class="collage-photo" style="width:36vw;margin-left:20px;margin-top:80px;"><img src="photos/photo61.jpg" alt=""></div>
+  <div class="collage-photo" style="width:54vw;margin-left:auto;margin-right:8px;margin-top:200px;"><img src="photos/photo62.jpg" alt=""></div>
+  <div class="collage-photo" style="width:80vw;margin-left:-14px;margin-top:130px;"><img src="photos/photo63.jpg" alt=""></div>
+  <div class="collage-photo" style="width:42vw;margin:280px auto 0;"><img src="photos/photo64.jpg" alt=""></div>
+  <div class="collage-photo" style="width:60vw;margin-left:auto;margin-right:-10px;margin-top:100px;"><img src="photos/photo65.jpg" alt=""></div>
+  <div class="collage-photo" style="width:52vw;margin-left:-8px;margin-top:180px;"><img src="photos/photo66.jpg" alt=""></div>
+  <div class="collage-photo" style="width:70vw;margin:70px auto 0;"><img src="photos/photo67.jpg" alt=""></div>
+  <div class="collage-photo" style="width:48vw;margin-left:16px;margin-top:250px;"><img src="photos/photo68.jpg" alt=""></div>
+  <div class="collage-photo" style="width:85vw;margin-left:auto;margin-right:-16px;margin-top:110px;"><img src="photos/photo69.jpg" alt=""></div>
+  <div class="collage-photo" style="width:40vw;margin-left:24px;margin-top:200px;"><img src="photos/photo70.jpg" alt=""></div>
+  <div class="collage-photo" style="width:65vw;margin:90px auto 0;"><img src="photos/photo71.jpg" alt=""></div>
+  <div class="collage-photo" style="width:55vw;margin-left:auto;margin-right:0;margin-top:160px;"><img src="photos/photo72.jpg" alt=""></div>
+  <div class="collage-photo" style="width:78vw;margin-left:-12px;margin-top:240px;"><img src="photos/photo73.jpg" alt=""></div>
+  <div class="collage-photo" style="width:44vw;margin-left:auto;margin-right:20px;margin-top:120px;"><img src="photos/photo74.jpg" alt=""></div>
+  <div class="collage-photo" style="width:56vw;margin-left:10px;margin-top:190px;"><img src="photos/photo75.jpg" alt=""></div>
+  <div class="collage-photo" style="width:62vw;margin-left:auto;margin-right:-8px;margin-top:80px;"><img src="photos/photo76.jpg" alt=""></div>
+  <div class="collage-photo" style="width:50vw;margin:270px auto 0;"><img src="photos/photo77.jpg" alt=""></div>
+  <div class="collage-photo" style="width:72vw;margin-left:-10px;margin-top:100px;"><img src="photos/photo78.jpg" alt=""></div>
+  <div class="collage-photo" style="width:38vw;margin-left:auto;margin-right:16px;margin-top:210px;"><img src="photos/photo79.jpg" alt=""></div>
+  <div class="collage-photo" style="width:82vw;margin:150px auto 0;"><img src="photos/photo80.jpg" alt=""></div>
+  <div class="collage-photo" style="width:46vw;margin-left:20px;margin-top:80px;"><img src="photos/photo81.jpg" alt=""></div>
+  <div class="collage-photo" style="width:58vw;margin-left:auto;margin-right:-12px;margin-top:260px;"><img src="photos/photo82.jpg" alt=""></div>
+  <div class="collage-photo" style="width:90vw;margin-left:-16px;margin-top:120px;"><img src="photos/photo83.jpg" alt=""></div>
+  <div class="collage-photo" style="width:40vw;margin-left:auto;margin-right:24px;margin-top:190px;"><img src="photos/photo84.jpg" alt=""></div>
+  <div class="collage-photo" style="width:68vw;margin-left:8px;margin-top:70px;"><img src="photos/photo85.jpg" alt=""></div>
+  <div class="collage-photo" style="width:52vw;margin-left:auto;margin-right:0;margin-top:240px;"><img src="photos/photo86.jpg" alt=""></div>
+  <div class="collage-photo" style="width:76vw;margin:100px auto 0;"><img src="photos/photo87.jpg" alt=""></div>
+  <div class="collage-photo" style="width:44vw;margin-left:-14px;margin-top:180px;"><img src="photos/photo88.jpg" alt=""></div>
+  <div class="collage-photo" style="width:38vw;margin-left:auto;margin-right:12px;margin-top:280px;"><img src="photos/photo90.jpg" alt=""></div>
+  <div class="collage-photo" style="width:75vw;margin:200px auto 0;"><img src="photos/photo89.jpg" alt=""></div>
+
+  <p style="margin-top:40px;text-align:center;font-size:18px;letter-spacing:0.15em;color:#aaaaaa;font-style:italic;font-family:'Cormorant Garamond',serif;">joyeux anniversaire, je t'aime.</p>
+
+  <p style="margin-top:80px;margin-bottom:160px;text-align:center;">
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:#c0bbb4;text-decoration:none;font-family:'Cormorant Garamond',serif;">revenir en haut</a>
+  </p>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+(function() {
+
+  // ─── 1. WRAP EACH WORD IN THE LETTER BODY INTO <span class="word"> ───
+  var letterBody = document.getElementById('letter-body');
+  var paragraphs = letterBody.querySelectorAll('p');
+  var allWords = []; // { el, index }
+
+  paragraphs.forEach(function(p) {
+    var text = p.textContent;
+    p.innerHTML = '';
+    var ws = text.split(/(\s+)/); // split keeping whitespace
+    for (var i = 0; i < ws.length; i++) {
+      if (/^\s+$/.test(ws[i])) {
+        p.appendChild(document.createTextNode(' '));
+      } else if (ws[i].length > 0) {
+        var span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = ws[i];
+        p.appendChild(span);
+        allWords.push({ el: span, index: allWords.length });
+      }
+    }
+  });
+
+  // Elements hidden during scatter (date, salutation, signature, separators)
+  var container = document.querySelector('.letter-container');
+  var metaEls = container.querySelectorAll('.letter-date, .letter-salutation, .letter-signature, .letter-separator');
+
+  // ─── 2. MEASURE FINAL POSITIONS (letter is already fixed+centered) ───
+  var letterSection = document.getElementById('letter-section');
+  var finalPos = [];
+  for (var i = 0; i < allWords.length; i++) {
+    var rect = allWords[i].el.getBoundingClientRect();
+    finalPos.push({ x: rect.left, y: rect.top });
+  }
+
+  // ─── 3. ASSIGN SCATTER STATE ───
+  var winW = window.innerWidth;
+  var winH = window.innerHeight;
+
+  for (var i = 0; i < allWords.length; i++) {
+    var w = allWords[i];
+    w.sx = 10 + Math.random() * (winW - 20);
+    w.sy = 10 + Math.random() * (winH - 20);
+    w.sr = (Math.random() - 0.5) * 80;       // rotation -40 to +40
+    w.so = 0.45 + Math.random() * 0.45;      // opacity 0.45–0.9
+    w.ss = 1.2 + Math.random() * 1.3;        // scale 1.2–2.5
+    w.sg = 150 + Math.random() * 55 | 0;     // gray 150–205
+  }
+
+  // ─── 4. APPLY INITIAL SCATTER (before first scroll) ───
+  // Hide meta elements, set each word to its scatter position
+  for (var j = 0; j < metaEls.length; j++) metaEls[j].style.opacity = '0';
+
+  for (var i = 0; i < allWords.length; i++) {
+    var w = allWords[i];
+    var dx = w.sx - finalPos[i].x;
+    var dy = w.sy - finalPos[i].y;
+    w.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + w.sr + 'deg) scale(' + w.ss + ')';
+    w.el.style.opacity = w.so;
+    w.el.style.color = 'rgb(' + w.sg + ',' + w.sg + ',' + w.sg + ')';
+  }
+
+  // Now show the letter section (words are scattered so it looks like chaos)
+  letterSection.style.opacity = '1';
+
+  // ─── 5. SCROLL-DRIVEN ANIMATION ───
+  var spacer = document.getElementById('scroll-spacer');
+  var hint = document.querySelector('.scroll-hint');
+  var ticking = false;
+  var isDone = false;
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  function update() {
+    ticking = false;
+    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    var spacerH = spacer.offsetHeight;
+    // Animation uses 300vh of scroll (0→300vh), then hold 50vh, then exit
+    var range = winH * 3; // 300vh for animation
+    if (range < 1) range = 1;
+    var progress = scrollY / range;
+    if (progress < 0) progress = 0;
+    if (progress > 1) progress = 1;
+
+    // Scroll hint
+    if (hint) {
+      var h = 0.4 * (1 - scrollY / (winH * 0.3));
+      hint.style.opacity = h > 0 ? h : 0;
+      hint.style.display = h < 0.01 ? 'none' : '';
+    }
+
+    // Meta elements fade in during last 20%
+    var metaOp = progress < 0.8 ? 0 : (progress - 0.8) / 0.2;
+    for (var j = 0; j < metaEls.length; j++) {
+      metaEls[j].style.opacity = metaOp;
+    }
+
+    // ── ASSEMBLED: clear word transforms, scroll letter up as user keeps scrolling ──
+    if (progress >= 1) {
+      if (!isDone) {
+        isDone = true;
+        for (var i = 0; i < allWords.length; i++) {
+          allWords[i].el.style.transform = '';
+          allWords[i].el.style.opacity = '';
+          allWords[i].el.style.color = '';
+        }
+        for (var j = 0; j < metaEls.length; j++) metaEls[j].style.opacity = '';
+      }
+      // Hold the letter for 50vh after assembly, then scroll it up
+      var holdZone = winH * 0.5;
+      var overscroll = scrollY - range - holdZone;
+      if (overscroll < 0) overscroll = 0;
+      letterSection.style.transform = 'translateY(' + (-overscroll) + 'px)';
+      return;
+    }
+
+    // ── SCROLLED BACK: reset ──
+    if (isDone) {
+      isDone = false;
+    }
+    letterSection.style.transform = '';
+
+    // ── ANIMATE WORDS ──
+    var n = allWords.length;
+    for (var i = 0; i < n; i++) {
+      var w = allWords[i];
+      var fp = finalPos[i];
+
+      // Stagger
+      var stagger = (w.index / n) * 0.2;
+      var cp = (progress - stagger) / (1 - stagger);
+      if (cp < 0) cp = 0;
+      if (cp > 1) cp = 1;
+
+      // Ease in-out quad
+      var ease = cp < 0.5 ? 2 * cp * cp : 1 - (-2 * cp + 2) * (-2 * cp + 2) / 2;
+
+      // Interpolate: scatter → final (0,0 in transform space since element is already at finalPos)
+      var dx = (w.sx - fp.x) * (1 - ease);
+      var dy = (w.sy - fp.y) * (1 - ease);
+      var rot = w.sr * (1 - ease);
+      var sc = w.ss + (1 - w.ss) * ease;
+      var op = w.so + (1 - w.so) * ease;
+      var g = (w.sg + (42 - w.sg) * ease) | 0;
+
+      w.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot + 'deg) scale(' + sc + ')';
+      w.el.style.opacity = op;
+      w.el.style.color = 'rgb(' + g + ',' + g + ',' + g + ')';
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ─── LIGHTBOX ───
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+
+  document.querySelectorAll('.collage-photo img').forEach(function(img) {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', function() {
+      lightboxImg.src = this.src;
+      lightbox.classList.add('active');
+    });
+  });
+
+  window.closeLightbox = function() {
+    lightbox.classList.remove('active');
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+})();
+</script>
+
+<!--
+  ══════════════════════════════════════════════════════
+  HOW TO CUSTOMIZE THIS PAGE
+  ══════════════════════════════════════════════════════
+
+  1. REPLACE LETTER TEXT
+     - Edit the letter text in #letter-section (.letter-body paragraphs)
+     - The scatter animation reads directly from the HTML, so there's only one place to edit.
+
+  2. ADD YOUR PHOTOS
+     - Create a `photos/` folder next to this index.html
+     - Name your images: photo1.jpg, photo2.jpg … photo90.jpg
+     - Mix portrait and landscape for best visual rhythm
+     - The collage section will display them automatically
+
+  3. TEXT SLOTS
+     - The 3 text slots between photos can be customized
+     - Edit the <p> content inside each .text-slot div
+     - You can add dates, locations, or short captions
+     - Example: <p>Paris, juillet 2023</p>
+
+  4. LOCAL PREVIEW ON YOUR PHONE
+     - Open a terminal in this folder
+     - Run: python3 -m http.server 8080
+     - On your phone, go to: http://<your-computer-ip>:8080
+     - Find your IP with: ipconfig (Windows) or ifconfig (Mac/Linux)
+  ══════════════════════════════════════════════════════
+-->
+
+</body>
+</html>
