@@ -52,8 +52,9 @@ body {
   background: #efece7;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 40px 0;
+  align-items: flex-start;
+  padding: 60px 0 40px;
+  overflow-y: auto;
   z-index: 5;
 }
 .letter-container {
@@ -338,19 +339,19 @@ body {
   }
 
   // ─── 4. APPLY INITIAL SCATTER (before first scroll) ───
-  // Hide meta elements, set each word to its scatter position
   for (var j = 0; j < metaEls.length; j++) metaEls[j].style.opacity = '0';
 
   for (var i = 0; i < allWords.length; i++) {
     var w = allWords[i];
     var dx = w.sx - finalPos[i].x;
     var dy = w.sy - finalPos[i].y;
-    w.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + w.sr + 'deg) scale(' + w.ss + ')';
+    // Set opacity + color once, only transform changes per frame
     w.el.style.opacity = w.so;
     w.el.style.color = 'rgb(' + w.sg + ',' + w.sg + ',' + w.sg + ')';
+    w.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + w.sr + 'deg) scale(' + w.ss + ')';
+    w.settled = false;
   }
 
-  // Now show the letter section (words are scattered so it looks like chaos)
   letterSection.style.opacity = '1';
 
   // ─── 5. SCROLL-DRIVEN ANIMATION ───
@@ -415,7 +416,7 @@ body {
     }
     letterSection.style.transform = '';
 
-    // ── ANIMATE WORDS ──
+    // ── ANIMATE WORDS (only transform per frame for perf) ──
     var n = allWords.length;
     for (var i = 0; i < n; i++) {
       var w = allWords[i];
@@ -430,17 +431,29 @@ body {
       // Ease in-out quad
       var ease = cp < 0.5 ? 2 * cp * cp : 1 - (-2 * cp + 2) * (-2 * cp + 2) / 2;
 
-      // Interpolate: scatter → final (0,0 in transform space since element is already at finalPos)
+      // When word reaches its final spot, snap color/opacity once and skip future updates
+      if (ease >= 1) {
+        if (!w.settled) {
+          w.settled = true;
+          w.el.style.transform = '';
+          w.el.style.opacity = '';
+          w.el.style.color = '';
+        }
+        continue;
+      }
+
+      // If scrolling back up, un-settle
+      if (w.settled) {
+        w.settled = false;
+      }
+
+      // Only update transform — cheapest GPU-composited property
       var dx = (w.sx - fp.x) * (1 - ease);
       var dy = (w.sy - fp.y) * (1 - ease);
       var rot = w.sr * (1 - ease);
       var sc = w.ss + (1 - w.ss) * ease;
-      var op = w.so + (1 - w.so) * ease;
-      var g = (w.sg + (42 - w.sg) * ease) | 0;
 
       w.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot + 'deg) scale(' + sc + ')';
-      w.el.style.opacity = op;
-      w.el.style.color = 'rgb(' + g + ',' + g + ',' + g + ')';
     }
   }
 
